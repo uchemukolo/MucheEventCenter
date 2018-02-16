@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize/css/materialize.min.css"  media="screen,projection"/>
+    <link href="css/materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Muche Events</title>
+  </head>
+
+  <body>
+    <!--Import jQuery before materialize.js-->
+    <nav class="nav-extended">
+            <div class="nav-wrapper black">
+              <a href="index.html" class="brand-logo">MUCHE EVENTS</a>
+              <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+              <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="centers.html">Browse Centers</a></li>
+                <li><a class="modal-trigger" href="#modal1">Login</a></li>
+                <li><a class= "modal-trigger" href="#modal2">Register</a></li>
+                <li><a href="#">Add a Center</a></li>
+              </ul>
+              <ul class="side-nav" id="mobile-demo">
+                    <li><a href="centers.html">Browse Centers</a></li>
+                    <li><a href="centerlist.html">Book a Center</a></li>
+                    <li><a class="modal-trigger" href="#modal1">Login</a></li>
+                    <li><a class= "modal-trigger" href="#modal2">Register</a></li>
+                    <li><a href="centerlist.html">Add a Center</a></li>
+              </ul>
+            </div>
+          </nav>
+           <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+        <div class="modal-content">
+          <h4>Login</h4>
+          <div class="row">
+                <form class="col s12">
+                  <div class="row">
+                     <div class="input-field col s6">
+                     <input id="email" type="email" class="validate">
+                     <label for="email">Enter Your Email Address or Phone Number</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="input-field col s6">
+                      <input id="password" type="password" class="validate">
+                      <label for="password">Password</label>
+                    </div>
+                  </div>
+                </form>
+              </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-action modal-close waves-effect waves-black btn-flat">Login</a>
+          <a href="#!">Forgot Password?</a>
+          <p>Don't have an account?  <a href= "#">Register Here</a>
+        </div>
+        </div>
+    
+        <!-- Modal Structure -->
+        <div id="modal2" class="modal">
+          <div class="modal-content">
+            <h4>Don't have an Account? Register Now</h4>
+            <div class="row">
+                  <form class="col s12">
+                    <div class="row">
+                      <div class="input-field col s6">
+                        <input id="first_name" type="text" class="validate">
+                        <label for="first_name">First Name</label>
+                      </div>
+                      <div class="input-field col s6">
+                        <input id="last_name" type="text" class="validate">
+                        <label for="last_name">Last Name</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                        <input id="email" type="email" class="validate">
+                        <label for="email">Email</label>
+                      </div>
+                      <div class="input-field col s6">
+                        <input id="phone_number" type="text" class="validate">
+                        <label for="phone_number">Phone Number</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s6">
+                        <input id="password" type="password" class="validate">
+                        <label for="password">Password</label>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+          </div>
+          <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-black btn-flat">Register</a>
+              </div>
+            </div>
+            <div class="slider">
+                    <ul class="slides">
+                      <li>
+                        <img src="https://lorempixel.com/580/250/nature/1"> <!-- random image -->
+                        <div class="caption center-align">
+                          <h3>This is our big Tagline!</h3>
+                          <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                        </div>
+                        </li>
+                        </ul>
+                        </div>
+            <div class="collection with-header">
+                <div class="col s12 m4">
+                <div class="collection-header"><h4>Browse By Location</h4>
+                <a href="centerlist.html" class="collection-item"><span class="badge">50</span>Lagos</a>
+                <a href="centerlist.html" class="collection-item active"><span class="badge">41</span>Abuja</a>
+                <a href="centerlist.html" class="collection-item"><span class="badge">32</span>Portharcourt</a>
+                <a href="centerlist.html" class="collection-item"><span class="badge">10</span>Kano</a>
+                </div>
+            </div>
+        </div>
+        <div class="collection with-header">
+                <div class="col s12 m4">
+                <div class="collection-header"><h4>Browse by Space Types</h4>
+                <a href="centerlist.html" class="collection-item"><span class="badge">23</span>Training Halls</a>
+                <a href="centerlist.html" class="collection-item active"><span class="badge">20</span>Event Centers</a>
+                <a href="centerlist.html" class="collection-item"><span class="badge">10</span>Conference Rooms</a>
+                <a href="centerlist.html" class="collection-item"><span class="badge">23</span>Meeting Room</a>
+                </div>
+            </div>
+        </div>
+          <footer class="page-footer black">
+                <div class="container">
+                  <div class="row">
+                    <div class="col l6 s12">
+                      <h4 class="white-text">MUCHE EVENTS</h4>
+                      <h6 class="white-text">6000+ Event Venues across Nigeria</h6>
+                      <p class="grey-text text-lighten-4">Find reception halls, venues for your wedding receptions, birthday parties, etc.
+                            Book marquee, conference centres, party halls, convention centres and various types of event centres.</p>
+                    </div>
+                    <div class="col l4 offset-l2 s12">
+                      <h5 class="white-text">Company</h5>
+                      <ul>
+                        <li><a class="grey-text text-lighten-3" href="#!">About Us</a></li>
+                        <li><a class="grey-text text-lighten-3" href="#!">Blog</a></li>
+                        <li><a class="grey-text text-lighten-3" href="#!">Privacy Policy</a></li>
+                        <li><a class="grey-text text-lighten-3" href="#!">Terms & Condition</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="footer-copyright">
+                  <div class="container">
+                  © 2018 Copyright Muche
+                  <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+                  </div>
+                </div>
+              </footer>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="css/materialize/js/materialize.min.js"></script>
+<script type="text/javascript" src="css/materialize/js/main.js"></script>
+
+
+</body>
+</html>
