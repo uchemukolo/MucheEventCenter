@@ -11,7 +11,7 @@ engines:
 ratings:
   paths:
   - "server/**.js"
-exclude_paths:
-- "tests/"
-- "node_modules/"
-- "template/"
+# exclude_paths:
+# - "tests/"
+# - "node_modules/"
+# - "template/"
