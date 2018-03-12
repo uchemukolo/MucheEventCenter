@@ -16,8 +16,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/api/events', event);
-app.use('/api/centers', center);
+// app.use('/api/events', event);
+// app.use('/api/centers', center);
 
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
