@@ -6,7 +6,7 @@ export default (sequelize, DataTypes) => {
       allowNul: false
     },
     address: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: false
     },
     description: {
