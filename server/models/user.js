@@ -7,7 +7,7 @@ export default (sequelize, DataTypes) => {
       unique: true
     },
     fullName: {
-      type: DataTyes.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     email: {
@@ -20,7 +20,7 @@ export default (sequelize, DataTypes) => {
       }
     },
     phoneNumber: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false
     },
     password: {
@@ -33,13 +33,14 @@ export default (sequelize, DataTypes) => {
       defaultValue: 'Regular'
     }
    });
+
   Users.associate = (models) => {
     Users.hasMany(models.Events, {
       foreignKey: 'userId',
       onDelete: 'CASCADE'
     });
     Users.hasMany(models.Centers, {
-      foreinKey: 'userId',
+      foreignKey: 'userId',
     });
     };
   return Users;

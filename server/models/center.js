@@ -5,6 +5,10 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNul: false
     },
+    address: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
     description: {
       type: DataTypes.TEXT,
       allowNull: false
@@ -34,7 +38,7 @@ export default (sequelize, DataTypes) => {
       allowNull: false
     },
     phoneNumber: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false
   },
 });

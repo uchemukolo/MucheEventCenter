@@ -1,79 +1,92 @@
-// global.centers = [{
-// 	id: '1',
-// 	name: 'Diamonds Center',
-// 	address: '1 Chevron drive, Lekki',
-// 	description: 'Diamonds Events Center and All brings a fresh and innovative approach to event venue services.',
-// 	capacity: '200',
-// 	amenities: 'Generator, AC, parking, music, DJ, catering'
-// }
-// ];
+import model from '../models';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import Sequelize from 'sequelize';
+import auth from '../middlewares/authenticate';
 
-// class Center {
-// 	static add (req, res ){
-// 		const{ id, name, address, description, capacity, amenities} = req.body;
-// 		if (!name){
-// 			res.status(400).send({
-// 				message: 'Please add new center name!'
-// 			})
-// 		} else if (!address){
-// 			res.status(400).send({
-// 				message: 'Please add address!'
-// 			})
-// 		} else if(!description){
-// 			res.status(400).send({
-// 				message: 'Please provide description!'
-// 			})
-// 		} else if(!capacity){
-// 			res.status(400).send({
-// 				message: 'Please stste the capacity of the new Center!'
-// 			})
-// 		} else if(!amenities){
-// 			res.status(400).send({
-// 				message: 'Please provde list of amenities'
-// 			})
-// 		} else {
-// 			global.centers.push(req.body);
-// 			return res.status(201).send({
-// 				message: 'Center Added Successfully',
-// 				centers: global.centers
-// 			})
-// 		}
-// 	}
-// 	static getAll(req, res ){
-// 		return res.status(200).send({
-// 			message: 'Successful',
-// 			centers: global.centers
-
-// 		})
-// 	}
-// 	static getOne(req, res ){
-// 		for(let i=0; i < global.centers.length; i++){
-// 			if(global.centers[i].id === parseInt(req.params.id, 10)){
-// 				global.centers.push(i, 1);
-// 				return res.status(200).send({
-// 					message: 'successful',
-// 					centers: global.centers
-// 				})
-// 			}
-// 		}
-// 	}
-// 	static modify(req, res ){
-// 		for(let i=0; i<global.centers.length; i++){
-// 			if(global.centers[i].id === parseInt(req.params.id, 10))	{
-// 				global.centers[1].name = req.body.name;
-// 				global.centers[i].address = req.body.address;
-// 				global.centers[i].description = req.body.description;
-// 				global.centers[i].capacity = req.body.capacity;
-// 				global.centers[i].amenities = req.body.amenities;
-// 				return res.status(201).send({
-// 					message: 'Center Modified'
-// 				})
-// 			}
-// 		}
-// 		return res.status(404).send({
-// 			message: 'Not Found',
-// 			centers: global.centers
-// 		})
-// 	}
-// }
-// export default Center;
+const center = model.Centers;
+class Center {
+	static add(req, res) {
+		const {name, address, description, decoded, location, capacity, userId, venueType, price, phoneNumber, facilities} = req.body;
+		const Decoded = jwt.decode(req.headers.token);
+		center.create({
+			userId: req.decoded.id,
+      name,
+      address,
+      description,
+      phoneNumber,
+      location,
+      capacity,
+      venueType,
+      facilities,
+			price
+		})
+		.then(created => res.status(201).send({
+			message: 'Center Added Successfully',
+			created
+		}))
+		.catch(err => res.status(500).send({
+			message: 'Some error occured!'
+		}));
+	}
+	static getAll(req, res) {
+		return center
+		.all()
+		.then((getAll) => {
+			res.status(200).send({
+				message: 'Successful',
+				getAll
+			});
+		});
+	}
+	static getOne (req, res) {
+		return center
+		.findById(req.params.id).then(found => {
+			if (!found) {
+				res.status(404).send({
+					message: 'Center not Found!'
+				})
+			} else {
+				res.status(200).send(found)
+			}
+		})
+		.catch(error => res.status(400).send(error))
+	}
+	static modify (req, res) {
+    const {userId, name, address, description, phoneNumber, location, capacity, venueType, facilities, price } = req.body;
+    const Decoded = jwt.decode(req.headers.token);
+    center.findOne({
+			where: {
+				userId: req.decoded.id,
+			}
+		})
+		.then(center => {
+			if (!center) {
+				return res.status(404).send({
+					message: 'Center Not Found',
+				});
+			}
+			return center
+			.update({
+				userId: req.body.userId || center.userId,
+				name: req.body.name || center.name,
+				address: req.body.address || center.address,
+				description: req.body.description || center.description,
+				PhoneNumber: req.body.phoneNumber || center.phoneNumber,
+        location: req.body.location || center.location,
+        capacity: req.body.capacity || center.capacity,
+        venueType: req.body.venueType || center.venueType,
+				facilities: req.body.facilities || center.facilities,
+				price: req.body.price || center.price
+			})
+			.then(created => res.status(201).send({
+				message: 'Update Successful',
+				created
+			}))
+			.catch(err => res.status(500).send({
+				message: 'Some error occured!'
+			}));
+		});
+	}
+}
+export default Center;
