@@ -5,7 +5,7 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    centerCode: {
+    centerId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
@@ -25,6 +25,10 @@ export default (sequelize, DataTypes) => {
   Events.associate = function(models) {
     Events.belongsTo(models.Users,{
       foreignKey: 'userId',
+      onDelete: 'CASCADE',
+    })
+    Events.belongsTo(models.Centers,{
+      foreignKey: 'centerId',
       onDelete: 'CASCADE',
     })
     };

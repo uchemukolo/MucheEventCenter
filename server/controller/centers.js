@@ -5,6 +5,7 @@ import Sequelize from 'sequelize';
 import auth from '../middlewares/authenticate';
 
 const center = model.Centers;
+const event = model.Events;
 class Center {
 	static add(req, res) {
 		const {name, address, description, decoded, location, capacity, userId, venueType, price, phoneNumber, facilities} = req.body;
@@ -39,19 +40,30 @@ class Center {
 			});
 		});
 	}
+
 	static getOne (req, res) {
-		return center
-		.findById(req.params.id).then(found => {
-			if (!found) {
-				res.status(404).send({
-					message: 'Center not Found!'
-				})
-			} else {
-				res.status(200).send(found)
+		return center.findOne({
+			where: {
+			id: req.params.id,
+		},
+		include: [{
+			model: event,
+		}],
+	})
+		.then((center) => {
+			if (!center) {
+				return res.status(400).send({
+					message: 'Center Not Found',
+				});
 			}
-		})
-		.catch(error => res.status(400).send(error))
-	}
+			else
+				res.status(200).send({
+					center,
+			});
+		}).catch(err => res.status(500).send({
+			message: 'Some error occured!'
+		}));
+}
 	static modify (req, res) {
     const {userId, name, address, description, phoneNumber, location, capacity, venueType, facilities, price } = req.body;
     const Decoded = jwt.decode(req.headers.token);

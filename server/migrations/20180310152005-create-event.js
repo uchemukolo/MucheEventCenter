@@ -17,13 +17,13 @@ module.exports = {
           as: 'userId'
         }
       },
-      centerCode: {
+      centerId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'Centers',
           key: 'id',
-          as: 'centerCode'
+          as: 'centerId'
         },
       },
       eventType: {

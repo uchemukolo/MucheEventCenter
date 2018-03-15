@@ -44,7 +44,7 @@ export default (sequelize, DataTypes) => {
 });
   Centers.associate = function(models) {
     Centers.hasMany(models.Events, {
-      foreignKey: 'centerCode',
+      foreignKey: 'centerId',
     });
     Centers.belongsTo(models.Users, {
       foreignKey: 'userId',

@@ -7,12 +7,12 @@ import auth from '../middlewares/authenticate'
 const events = model.Events
 class Event {
 	static create(req, res) {
-		const {userId, centerCode, eventType, eventDate, duration} = req.body;
+		const {userId, centerId, eventType, eventDate, duration} = req.body;
 		const decoded = jwt.decode(req.headers.token);
 		console.log(decoded);
 		events.findAll({
 			where: {
-				centerCode,
+				centerId,
 				eventDate
 			}
 		})
@@ -26,16 +26,18 @@ class Event {
 			return events
 			.create ({
         userId: decoded.id,
-        centerCode,
+        centerId,
         eventType,
-        eventDate
+				eventDate,
+				duration
       })
       .then(created =>{
 				console.log('heloooo....')
 				return res.status(201).send({
 					message: 'Event Added Successfully',
-          centerId: req.body.centerCode,
-          eventType: eventType
+          centerId: req.body.centerId,
+					eventType,
+					eventDate
         });
       })
     })
