@@ -1,6 +1,6 @@
-import event from '../controller/events';
 import express from 'express';
-import validate from '../middlewares/Validations';
+import event from '../controller/events';
+import validate from '../middlewares/validations';
 import auth from '../middlewares/authenticate';
 
 const router = express.Router();

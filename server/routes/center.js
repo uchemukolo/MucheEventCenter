@@ -1,5 +1,5 @@
-import center from '../controller/centers';
 import express from 'express';
+import center from '../controller/centers';
 import auth from '../middlewares/authenticate';
 import validate from '../middlewares/validations';
 

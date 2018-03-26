@@ -1,4 +1,3 @@
-'use strict';
 export default (sequelize, DataTypes) => {
   const Events = sequelize.define('Events', {
     userId: {
@@ -22,15 +21,15 @@ export default (sequelize, DataTypes) => {
       allowNull: false
     },
   });
-  Events.associate = function(models) {
-    Events.belongsTo(models.Users,{
+  Events.associate = function (models) {
+    Events.belongsTo(models.Users, {
       foreignKey: 'userId',
       onDelete: 'CASCADE',
-    })
-    Events.belongsTo(models.Centers,{
+    });
+    Events.belongsTo(models.Centers, {
       foreignKey: 'centerId',
       onDelete: 'CASCADE',
-    })
-    };
+    });
+  };
   return Events;
 };

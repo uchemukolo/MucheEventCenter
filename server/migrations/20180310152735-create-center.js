@@ -1,4 +1,3 @@
-'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Centers', {
@@ -21,7 +20,7 @@ module.exports = {
         allowNull: false
       },
       location: {
-        type:Sequelize.STRING,
+        type: Sequelize.STRING,
         allowNull: false
       },
       capacity: {

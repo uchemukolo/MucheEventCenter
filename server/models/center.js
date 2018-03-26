@@ -1,4 +1,3 @@
-'use strict';
 export default (sequelize, DataTypes) => {
   const Centers = sequelize.define('Centers', {
     name: {
@@ -14,7 +13,7 @@ export default (sequelize, DataTypes) => {
       allowNull: false
     },
     location: {
-      type:DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     capacity: {
@@ -40,15 +39,15 @@ export default (sequelize, DataTypes) => {
     phoneNumber: {
       type: DataTypes.STRING,
       allowNull: false
-  },
-});
-  Centers.associate = function(models) {
+    },
+  });
+  Centers.associate = function (models) {
     Centers.hasMany(models.Events, {
       foreignKey: 'centerId',
     });
     Centers.belongsTo(models.Users, {
       foreignKey: 'userId',
-    })
+    });
   };
   return Centers;
 };

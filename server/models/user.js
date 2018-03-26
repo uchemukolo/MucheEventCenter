@@ -1,4 +1,3 @@
-'use strict';
 export default (sequelize, DataTypes) => {
   const Users = sequelize.define('Users', {
     username: {
@@ -32,7 +31,7 @@ export default (sequelize, DataTypes) => {
       allownull: false,
       defaultValue: 'Regular'
     }
-   });
+  });
 
   Users.associate = (models) => {
     Users.hasMany(models.Events, {
@@ -42,6 +41,6 @@ export default (sequelize, DataTypes) => {
     Users.hasMany(models.Centers, {
       foreignKey: 'userId',
     });
-    };
+  };
   return Users;
 };
