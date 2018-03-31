@@ -4,6 +4,10 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNul: false
     },
+    image: {
+      type: DataTypes.STRING,
+      allowNul: false
+    },
     address: {
       type: DataTypes.STRING,
       allowNull: false

@@ -7,12 +7,13 @@ const event = model.Events;
 class Center {
   static add(req, res) {
     const {
- name, address, description, decoded, location, capacity, userId, venueType, price, phoneNumber, facilities
- } = req.body;
+      name, image, address, description, decoded, location, capacity, userId, venueType, price, phoneNumber, facilities
+    } = req.body;
     const Decoded = jwt.decode(req.headers.token);
     center.create({
       userId: req.decoded.id,
       name,
+      image,
       address,
       description,
       phoneNumber,
@@ -31,10 +32,11 @@ class Center {
       }));
   }
   static getAll(req, res) {
-    return center
+    center
       .all()
       .then((getAll) => {
-        res.status(200).send({
+        console.log('============================')
+       return res.status(200).send({
           message: 'Successful',
           getAll
         });
@@ -51,22 +53,22 @@ class Center {
       }],
     })
       .then((center) => {
-			if (!center) {
-				return res.status(400).send({
-					message: 'Center Not Found',
-				});
-			}
-			res.status(200).send({
-					center,
-			});
-		}).catch(err => res.status(500).send({
+        if (!center) {
+          return res.status(400).send({
+            message: 'Center Not Found',
+          });
+        }
+        res.status(200).send({
+          center,
+        });
+      }).catch(err => res.status(500).send({
         message: 'Some error occured!'
       }));
   }
   static modify(req, res) {
     const {
- userId, name, address, description, phoneNumber, location, capacity, venueType, facilities, price 
-} = req.body;
+      userId, name, image, address, description, phoneNumber, location, capacity, venueType, facilities, price
+    } = req.body;
     const Decoded = jwt.decode(req.headers.token);
     center.findOne({
       where: {
@@ -83,6 +85,7 @@ class Center {
           .update({
             userId: req.body.userId || center.userId,
             name: req.body.name || center.name,
+            image: req.body.image || centr.image,
             address: req.body.address || center.address,
             description: req.body.description || center.description,
             PhoneNumber: req.body.phoneNumber || center.phoneNumber,

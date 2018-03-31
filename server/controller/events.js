@@ -7,9 +7,7 @@ import auth from '../middlewares/authenticate';
 const events = model.Events;
 class Event {
   static create(req, res) {
-    const {
-      userId, centerId, eventType, eventDate, duration
-    } = req.body;
+    const {userId, centerId, eventType, eventDate, duration} = req.body;
     const decoded = jwt.decode(req.headers.token);
     console.log(decoded);
     events.findAll({
@@ -19,7 +17,6 @@ class Event {
       }
     })
       .then((event) => {
-        console.log(event.length);
         if (event.length > 0) {
           return res.status(401).send({
             message: 'Date Unavailable! Please Pick Another Day'
@@ -34,9 +31,8 @@ class Event {
             duration
           })
           .then((created) => {
-            console.log('heloooo....');
             return res.status(201).send({
-              message: 'Event Added Successfully',
+              message: 'Event Booked Successfully',
               centerId: req.body.centerId,
               eventType,
               eventDate
