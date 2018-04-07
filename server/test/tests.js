@@ -23,7 +23,7 @@ describe('API Integration Tests', () => {
         });
       // request.get(centerUrl)
       //   .send()
-      //   .end((err, res) => {
+      //   .then((err, res) => {
       //     expect(res.status).to.equal(200);
       //     done();
       //   });
@@ -38,78 +38,81 @@ describe('API Integration Tests', () => {
           });
       });
     });
-    //   describe('Modify Center Details', () => {
-    //     it('return 200 for Update successful', (done) => {
-    //       request.put(editCenterUrl)
-    //         .send({
-    //           userId: 1,
-    //           name: 'Diamond Events Place',
-    //           image: 'http://www.imageurl.com',
-    //           address: '2, Chevron drive, Lekki',
-    //           description: 'Description about the Event center goes here',
-    //           PhoneNumber: '08034345654',
-    //           location: 'Lagos',
-    //           capacity: 200,
-    //           venueType: 'Conference Center',
-    //           facilities: 'Parking',
-    //           price: 'N500,000/day'
-    //         })
-    //         .end((err, res) => {
-    //           expect(res.status).to.equal(200);
-    //           done();
-    //         });
-    //     });
-    //   });
-    //   describe('Add a New Center', () => {
-    //     it('return 201 for successful', (done) => {
-    //       request.post(addCenterUrl)
-    //         .send({
-    //           centerId: 1,
-    //           name: 'Diamond Events Place',
-    //           image: 'www.imageurl.com',
-    //           address: '2, Chevron drive, Lekki',
-    //           description: 'Description about the Event center goes here',
-    //           PhoneNumber: '08034345654',
-    //           location: 'Lagos',
-    //           capacity: 200,
-    //           venueType: 'Conference Center',
-    //           facilities: 'Parking',
-    //           price: 'N500,000/day'
-    //         })
-    //         .end((err, res) => {
-    //           expect(res.status).to.equal(201);
-    //           done();
-    //         });
-    //     });
-    //   });
-    //   describe('Modify Event Details', () => {
-    //     it('return 200 for Update successful', (done) => {
-    //       request.put(editEventUrl)
-    //         .send({
-    //           location: 'Lekki',
-    //           eventType: 'Wedding Reception',
-    //         })
-    //         .end((err, res) => {
-    //           expect(res.status).to.equal(200);
-    //           done();
-    //         });
-    //     });
-    //   });
-    //   describe('Add a New Event', () => {
-    //     it('return 201 for successful', (done) => {
-    //       request.post(addEventUrl)
-    //         .send({
-    //           userId: 1,
-    //           centerId: 2,
-    //           eventType: 'Wedding reception',
-    //           eventDate: 2018 - 12 - 24,
-    //           duration: '1 Day'
-    //         })
-    //         .end((err, res) => {
-    //           expect(res.status).to.equal(201);
-    //           done();
-    //         });
-    //     });
-    //   });
+    describe('Modify Center Details', () => {
+      it('return 200 for Update successful', () => {
+        request(app)
+          .put(editCenterUrl)
+          .send({
+            userId: 1,
+            name: 'Diamond Events Place',
+            image: 'http://www.imageurl.com',
+            address: '2, Chevron drive, Lekki',
+            description: 'Description about the Event center goes here',
+            PhoneNumber: '08034345654',
+            location: 'Lagos',
+            capacity: 200,
+            venueType: 'Conference Center',
+            facilities: 'Parking',
+            price: 'N500,000/day'
+          })
+          .then((err, res) => {
+            expect(res.status).to.equal(200);
+          });
+      });
+    });
+    describe('Add a New Center', () => {
+      it('return 201 for successful', () => {
+        request(app)
+          .post(addCenterUrl)
+          .send({
+            centerId: 1,
+            name: 'Diamond Events Place',
+            image: 'www.imageurl.com',
+            address: '2, Chevron drive, Lekki',
+            description: 'Description about the Event center goes here',
+            PhoneNumber: '08034345654',
+            location: 'Lagos',
+            capacity: 200,
+            venueType: 'Conference Center',
+            facilities: 'Parking',
+            price: 'N500,000/day'
+          })
+          .then((err, res) => {
+            expect(res.status).to.equal(201);
+          });
+      });
+    });
+    describe('Modify Event Details', () => {
+      it('return 200 for Update successful', () => {
+        request(app)
+          .put(editEventUrl)
+          .send({
+            userId: 1,
+            centerId: 1,
+            eventType: 'wedding Reception',
+            eventDate: 2018 - 3 - 24,
+            duration: '1 Day'
+          })
+          .then((err, res) => {
+            expect(res.status).to.equal(200);
+          });
+      });
+    });
+    describe('Add a New Event', () => {
+      it('return 201 for successful', () => {
+        request(app)
+          .post(addEventUrl)
+          .send({
+            userId: 1,
+            centerId: 2,
+            eventType: 'Wedding reception',
+            eventDate: 2018 - 12 - 24,
+            duration: '1 Day'
+          })
+          .then((err, res) => {
+            expect(res.status).to.equal(201);
+          });
+      });
+    });
   });
 });
