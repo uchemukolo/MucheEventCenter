@@ -5,9 +5,23 @@ import Sequelize from 'sequelize';
 import auth from '../middlewares/authenticate';
 
 const events = model.Events;
+/**
+ *
+ *
+ * @class Event
+ */
 class Event {
+  /**
+   *
+   * @param {any} req
+   * @param {any} res
+   * @returns {void}
+   * @memberof Event
+   */
   static create(req, res) {
-    const {userId, centerId, eventType, eventDate, duration} = req.body;
+    const {
+      userId, centerId, eventType, eventDate, duration
+    } = req.body;
     const decoded = jwt.decode(req.headers.token);
     console.log(decoded);
     events.findAll({
@@ -30,19 +44,24 @@ class Event {
             eventDate,
             duration
           })
-          .then((created) => {
-            return res.status(201).send({
-              message: 'Event Booked Successfully',
-              centerId: req.body.centerId,
-              eventType,
-              eventDate
-            });
-          });
+          .then(created => res.status(201).send({
+            message: 'Event Booked Successfully',
+            centerId: req.body.centerId,
+            eventType,
+            eventDate
+          }));
       })
       .catch((err) => {
         console.log(err);
       });
   }
+  /**
+   *
+   * @param {any} req
+   * @param {any} res
+   * @returns {void}
+   * @memberof Event
+   */
   static modify(req, res) {
     const {
       eventType, eventDate, duration, decoded
@@ -75,6 +94,13 @@ class Event {
           });
       });
   }
+  /**
+   *
+   * @param {any} req
+   * @param {any} res
+   * @returns {void}
+   * @memberof Event
+   */
   static delete(req, res) {
     events.find({
       where: {

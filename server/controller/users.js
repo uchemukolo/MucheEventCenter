@@ -6,7 +6,19 @@ import model from '../models';
 require('dotenv').config();
 
 const users = model.Users;
+/**
+ *
+ *
+ * @class User
+ */
 class User {
+  /**
+   *
+   * @param {any} req
+   * @param {any} res
+   * @returns {void}
+   * @memberof User
+   */
   static signup(req, res) {
     const {
       username, fullName, email, phoneNumber, password, confirmPassword
@@ -53,6 +65,13 @@ class User {
         });
       });
   }
+  /**
+   *
+   * @param {any} req
+   * @param {any} res
+   * @returns {void}
+   * @memberof User
+   */
   static signin(req, res) {
     const {
       username, email, phoneNumber, password,
