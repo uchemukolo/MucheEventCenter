@@ -51,8 +51,10 @@ class Event {
             eventDate
           }));
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        res.status(500).send({
+          message: 'some error occured!'
+        });
       });
   }
   /**

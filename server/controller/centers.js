@@ -114,7 +114,7 @@ class Center {
           .update({
             userId: req.body.userId || center.userId,
             name: req.body.name || center.name,
-            image: req.body.image || centr.image,
+            image: req.body.image || center.image,
             address: req.body.address || center.address,
             description: req.body.description || center.description,
             PhoneNumber: req.body.phoneNumber || center.phoneNumber,

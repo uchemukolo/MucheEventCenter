@@ -1,7 +1,8 @@
 class Validation {
   static signup(req, res, next) {
     const {
- username, fullName, email, phoneNumber, password, confirmPassword } = req.body;
+      username, fullName, email, phoneNumber, password, confirmPassword 
+} = req.body;
     if (!username || typeof username !== 'string') {
       return res.status(400).send({
         username: 'Please Enter Username'
@@ -46,8 +47,8 @@ class Validation {
   }
   static createEvent(req, res, next) {
     const {
-		userId, centerId, eventType, eventDate, duration
-} = req.body;
+      userId, centerId, eventType, eventDate, duration
+    } = req.body;
     if (!centerId || isNaN(centerId)) {
       res.status(400).send({
         message: 'Please include the center ID '
@@ -68,7 +69,8 @@ class Validation {
   }
   static addCenter(req, res, next) {
 	  const {
-		  userId, name, address, description, location, capacity, venueType, price, phoneNumber }
+		  userId, name, address, description, location, capacity, venueType, price, phoneNumber 
+    }
 	= req.body;
     if (!name || typeof name !== 'string') {
       res.status(400).send({

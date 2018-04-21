@@ -21,7 +21,7 @@ class User {
    */
   static signup(req, res) {
     const {
-      username, fullName, email, phoneNumber, password, confirmPassword
+      username, fullName, email, phoneNumber, password
     } = req.body;
     users.find({
       where: {
@@ -32,34 +32,51 @@ class User {
         ]
       }
     })
-      .then((foundUser) => {
-        if (!foundUser) {
-          return users.create({
-            username,
+      .then((found) => {
+        if (found) {
+          let email;
+          let username;
+          let phoneNumber;
+          if (found.email === email) {
+            email = 'Email is already in use';
+          }
+          if (found.username === username) {
+            username = 'Username already taken';
+          }
+          if (found.phoneNumber === phoneNumber) {
+            phoneNumber = 'Username already taken';
+          }
+          return res.status(409).send({
             email,
-            fullName,
-            phoneNumber,
-            password: bcrypt.hashSync(password, 10),
-          })
-            .then((newUser) => {
-              const token = jwt.sign({ user: foundUser }, process.env.SECRET_KEY, {
-                expiresIn: 60 * 60 * 24
-              });
-              res.status(201).send({
-                message: 'Signup Successful',
-                username,
-                fullName,
-                phoneNumber,
-                email,
-                Token: token
-              });
-            });
+            username,
+            phoneNumber
+          });
         }
-        return res.status(400).send({
-          message: 'User already exists'
+      });
+    return users.create({
+      username,
+      email,
+      fullName,
+      phoneNumber,
+      password: bcrypt.hashSync(password, 10),
+    })
+      .then((user) => {
+        const newUser = {
+          id: user.id,
+          username: user.username,
+          fullName: user.fullName,
+          email: user.email,
+          phoneNumber: user.phoneNumber
+        };
+        res.status(201).send({
+          message: 'Signup Successful',
+          newUser
         });
       })
-      .catch((err) => {
+    // return res.status(400).send({
+    //   message: 'User already exists'
+    // });
+      .catch(() => {
         res.status(500).send({
           message: 'some error occured!'
         });
@@ -73,9 +90,9 @@ class User {
    * @memberof User
    */
   static signin(req, res) {
-    const {
-      username, email, phoneNumber, password,
-    } = req.body;
+    // const {
+    //   username, email, phoneNumber, password,
+    // } = req.body;
     users.findOne({
       where: {
         $or: [
@@ -104,8 +121,8 @@ class User {
             Token: token
           });
         } else {
-          res.status(401).send({
-            Error: 'Incorrect Password'
+          res.status(400).send({
+            message: 'Incorrect Password'
           });
         }
       });

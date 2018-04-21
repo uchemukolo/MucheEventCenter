@@ -1,118 +1,135 @@
-import { expect } from 'chai';
-import request from 'supertest';
+import chai from 'chai';
+import chaiHttp from 'chai-http';
 import app from '../app';
+import dummyData from './dummy';
+import db from '../models';
 
-// const request = supertest(app);
-// const rootURL = '/api';
-const centerUrl = '/api/v1/centers';
-const centerDetailUrl = '/api/v1/centers/1';
-const editCenterUrl = '/api/v1/centers/1';
-const addCenterUrl = '/api/v1/centers';
-const addEventUrl = '/api/v1/events';
-const editEventUrl = '/api/v1/events/1';
+const should = chai.should();
+
+chai.use(chaiHttp);
+
+let token;
+let userId;
 
 
-describe('API Integration Tests', () => {
-  describe('Get All Centers', () => {
-    it('return 200 for successful', () => {
-      request(app)
-        .get(centerUrl)
-        .send()
-        .then((err, res) => {
-          expect(res.status).to.equal(200);
-        });
-      // request.get(centerUrl)
-      //   .send()
-      //   .then((err, res) => {
-      //     expect(res.status).to.equal(200);
-      //     done();
-      //   });
-    });
-    describe('Get Center Details', () => {
-      it('return 200 for successful', () => {
-        request(app)
-          .get(centerDetailUrl)
-          .send()
-          .then((err, res) => {
-            expect(res.status).to.equal(200);
-          });
+// ///////////////////////
+// // *** USERS *** ///
+// /////////////////////
+
+describe('User Controller', () => {
+
+  it('should not let user sign up with no username', (done) => {
+    chai.request(app)
+      .post('/api/v1/users')
+      .send(dummyData.noUsernameUsers)
+      .end((err, res) => {
+        res.should.have.status(400);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.should.have.property('username').equal('Please Enter Username');
+        done();
       });
-    });
-    describe('Modify Center Details', () => {
-      it('return 200 for Update successful', () => {
-        request(app)
-          .put(editCenterUrl)
-          .send({
-            userId: 1,
-            name: 'Diamond Events Place',
-            image: 'http://www.imageurl.com',
-            address: '2, Chevron drive, Lekki',
-            description: 'Description about the Event center goes here',
-            PhoneNumber: '08034345654',
-            location: 'Lagos',
-            capacity: 200,
-            venueType: 'Conference Center',
-            facilities: 'Parking',
-            price: 'N500,000/day'
-          })
-          .then((err, res) => {
-            expect(res.status).to.equal(200);
-          });
-      });
-    });
-    describe('Add a New Center', () => {
-      it('return 201 for successful', () => {
-        request(app)
-          .post(addCenterUrl)
-          .send({
-            centerId: 1,
-            name: 'Diamond Events Place',
-            image: 'www.imageurl.com',
-            address: '2, Chevron drive, Lekki',
-            description: 'Description about the Event center goes here',
-            PhoneNumber: '08034345654',
-            location: 'Lagos',
-            capacity: 200,
-            venueType: 'Conference Center',
-            facilities: 'Parking',
-            price: 'N500,000/day'
-          })
-          .then((err, res) => {
-            expect(res.status).to.equal(201);
-          });
-      });
-    });
-    describe('Modify Event Details', () => {
-      it('return 200 for Update successful', () => {
-        request(app)
-          .put(editEventUrl)
-          .send({
-            userId: 1,
-            centerId: 1,
-            eventType: 'wedding Reception',
-            eventDate: 2018 - 3 - 24,
-            duration: '1 Day'
-          })
-          .then((err, res) => {
-            expect(res.status).to.equal(200);
-          });
-      });
-    });
-    describe('Add a New Event', () => {
-      it('return 201 for successful', () => {
-        request(app)
-          .post(addEventUrl)
-          .send({
-            userId: 1,
-            centerId: 2,
-            eventType: 'Wedding reception',
-            eventDate: 2018 - 12 - 24,
-            duration: '1 Day'
-          })
-          .then((err, res) => {
-            expect(res.status).to.equal(201);
-          });
-      });
-    });
   });
+
+  it('should not let user sign up with no email', (done) => {
+    chai.request(app)
+      .post('/api/v1/users')
+      .send(dummyData.noEmailUsers)
+      .end((err, res) => {
+        res.should.have.status(400);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.should.have.property('email').equal('Please Enter Email');
+        done();
+      });
+  });
+
+  it('should not let user sign up with no password', (done) => {
+    chai.request(app)
+      .post('/api/v1/users')
+      .send(dummyData.noPasswordUsers)
+      .end((err, res) => {
+        res.should.have.status(400);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.should.have.property('password').equal('Please Enter password');
+        done();
+      });
+  });
+
+  it('should not let user sign up with password less than 6', (done) => {
+    chai.request(app)
+      .post('/api/v1/users')
+      .send(dummyData.lessPass)
+      .end((err, res) => {
+        res.should.have.status(400);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.should.have.property('password').equal('Password is too short!');
+        done();
+      });
+  });
+
+  it('should let users sign up /signup POST', (done) => {
+    chai.request(app)
+      .post('/api/v1/users')
+      .send(dummyData.newUsers)
+      .end((err, res) => {
+        res.should.be.json;
+        userId = res.body.newUser.id;
+        res.body.should.be.a('object');
+        res.should.have.status(201);
+        done();
+      });
+  });
+
+  it('should not let user sign up with the same email twice', (done) => {
+    chai.request(app)
+      .post('/api/v1/users')
+      .send(dummyData.newUsers)
+      .end((err, res) => {
+        res.should.have.status(409);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+
+  it('should let users sign in /login POST', (done) => {
+    const User = {
+      username: dummyData.newUsers.email,
+      password: '11110000'
+    };
+    chai.request(app)
+      .post('/api/v1/users/login')
+      .send(User)
+      .end((err, res) => {
+        token = res.body.Token;
+        res.should.have.status(200);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.should.have.property('message').equal('Signin Successful!');
+        res.body.should.have.property('Token');
+        done();
+      });
+  });
+
+  it('should not let users login with wrong password', (done) => {
+    const foundUser = {
+      username: dummyData.newUsers.email,
+      password: '11110000x'
+    };
+    chai.request(app)
+      .post('/api/v1/users/login')
+      .send(foundUser)
+      .end((err, res) => {
+        res.should.have.status(400);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.should.have.property('message').equal('Incorrect Password');
+        done();
+      });
+  });
+
+// end of user describe
 });
