@@ -117,7 +117,7 @@ describe('User Controller', () => {
       .end((err, res) => {
         res.should.have.status(400);
         res.body.should.be.a('object');
-        res.body.should.have.property('message').equal('Incorrect Signin Credentials!');
+        res.body.should.have.property('message').equal('Incorrect Password');
         done();
       });
   });
