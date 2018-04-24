@@ -129,25 +129,25 @@ describe('User Controller', () => {
 // // *** EVENTS *** ///
 // /////////////////////
 
-describe('Events Controller', () => {
-  const events = {
-    centerId: 1,
-    eventType: 'Wedding',
-    eventDate: 12 - 18 - 2018,
-    duration: '1 Day',
-    ingredients: 'ingredients, ingredients, ingredients, ingredients'
-  };
+// describe('Events Controller', () => {
+//   const events = {
+//     centerId: 1,
+//     eventType: 'Wedding',
+//     eventDate: 12 - 18 - 2018,
+//     duration: '1 Day',
+//     ingredients: 'ingredients, ingredients, ingredients, ingredients'
+//   };
 
-  it('should not let unauthorized user create new event', (done) => {
-    chai.request(app)
-      .post('/api/v1/events')
-      .send(events)
-      .end((err, res) => {
-        res.should.have.status(401);
-        res.body.should.be.a('object');
-        res.body.should.have.property('message').equal('Unauthorised User!');
-        done();
-      });
-  });
-});
+//   it('should not let unauthorized user create new event', (done) => {
+//     chai.request(app)
+//       .post('/api/v1/events')
+//       .send(events)
+//       .end((err, res) => {
+//         res.should.have.status(401);
+//         res.body.should.be.a('object');
+//         res.body.should.have.property('message').equal('Unauthorised User!');
+//         done();
+//       });
+//   });
+// });
 
