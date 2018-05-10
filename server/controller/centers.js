@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 import model from '../models';
-import auth from '../middlewares/authenticate';
 
 const center = model.Centers;
 const event = model.Events;
@@ -19,7 +18,8 @@ class Center {
    */
   static add(req, res) {
     const {
-      name, image, address, description, decoded, location, capacity, userId, venueType, price, phoneNumber, facilities
+      name, image, address, description, decoded, location, capacity, venueType, price,
+      phoneNumber, facilities
     } = req.body;
     const Decoded = jwt.decode(req.headers.token);
     center.create({
@@ -39,7 +39,7 @@ class Center {
         message: 'Center Added Successfully',
         created
       }))
-      .catch(err => res.status(500).send({
+      .catch(() => res.status(500).send({
         message: 'Some error occured!'
       }));
   }
@@ -74,16 +74,16 @@ class Center {
         model: event,
       }],
     })
-      .then((center) => {
+      .then((getOneCenter) => {
         if (!center) {
           return res.status(400).send({
             message: 'Center Not Found',
           });
         }
         res.status(200).send({
-          center,
+          getOneCenter,
         });
-      }).catch(err => res.status(500).send({
+      }).catch(() => res.status(500).send({
         message: 'Some error occured!'
       }));
   }
@@ -95,9 +95,6 @@ class Center {
    * @memberof Center
    */
   static modify(req, res) {
-    const {
-      userId, name, image, address, description, phoneNumber, location, capacity, venueType, facilities, price
-    } = req.body;
     const Decoded = jwt.decode(req.headers.token);
     center.findOne({
       where: {
@@ -128,7 +125,7 @@ class Center {
             message: 'Update Successful',
             created
           }))
-          .catch(err => res.status(500).send({
+          .catch(() => res.status(500).send({
             message: 'Some error occured!'
           }));
       });

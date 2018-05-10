@@ -1,13 +1,12 @@
 import jwt from 'jsonwebtoken';
-import app from '../app';
 
 require('dotenv').config();
 
 const key = process.env.SECRET_KEY;
 
-const auth= {
+const auth = {
   Verify: (req, res, next) => {
-    const token = req.body.token || req.query.token || req.headers.token;
+    const token = req.body.token || req.query.token || req.headers['x-token'];
     if (!token) {
       res.status(400).send({
         message: 'Unauthorised User!'

@@ -1,8 +1,5 @@
-import model from '../models';
-import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import Sequelize from 'sequelize';
-import auth from '../middlewares/authenticate';
+import model from '../models';
 
 const events = model.Events;
 /**
@@ -20,10 +17,9 @@ class Event {
    */
   static create(req, res) {
     const {
-      userId, centerId, eventType, eventDate, duration
+      centerId, eventType, eventDate, duration
     } = req.body;
     const decoded = jwt.decode(req.headers.token);
-    console.log(decoded);
     events.findAll({
       where: {
         centerId,
@@ -47,6 +43,7 @@ class Event {
           .then(created => res.status(201).send({
             message: 'Event Booked Successfully',
             centerId: req.body.centerId,
+            created,
             eventType,
             eventDate
           }));
@@ -65,36 +62,47 @@ class Event {
    * @memberof Event
    */
   static modify(req, res) {
-    const {
-      eventType, eventDate, duration, decoded
-    } = req.body;
     events.findOne({
       where: {
         userId: req.decoded.id,
       }
-    })
-      .then((events) => {
-        if (!events) {
-          return res.status(404).send({
-            message: 'Event Not Found',
-          });
-        }
-        return events
-          .update({
-            eventType: req.body.eventType || events.eventType,
-            eventDate: req.body.eventDate || events.eventDate,
-            duration: req.body.duration || events.duration
-          })
-          .then(updated => res.status(200).send({
-            message: 'Update Successful',
-            updated
-          }))
-          .catch((error) => {
-            res.status(500).send({
-              message: 'Some Error Occured'
-            });
-          });
+    });
+    // .then((events) => {
+    if (!events) {
+      return res.status(404).send({
+        message: 'Event Not Found',
       });
+    }
+    return events
+      .update({
+        eventType: req.body.eventType || events.eventType,
+        eventDate: req.body.eventDate || events.eventDate,
+        duration: req.body.duration || events.duration
+      })
+      .then(updated => res.status(200).send({
+        message: 'Update Successful',
+        updated
+      }))
+      .catch(() => {
+        res.status(500).send({
+          message: 'Some Error Occured'
+        });
+      });
+  }
+  /**
+   *
+   * @param {any} req
+   * @param {any} res
+   * @returns {void}
+   * @memberof Event
+   */
+  static getAll(req, res) {
+    events
+      .all()
+      .then(getAll => res.status(200).send({
+        message: 'Successful',
+        getAll
+      }));
   }
   /**
    *
@@ -109,8 +117,7 @@ class Event {
         userId: req.decoded.id,
       }
     })
-      .then((events) => {
-        console.log(events);
+      .then(() => {
         if (!events) {
           return res.status(400).send({
             message: 'Event Not Found',

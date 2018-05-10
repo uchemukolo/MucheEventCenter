@@ -1,8 +1,10 @@
-class Validation {
-  static signup(req, res, next) {
+
+const Validation = {
+
+  signup(req, res, next) {
     const {
-      username, fullName, email, phoneNumber, password, confirmPassword 
-} = req.body;
+      username, fullName, email, phoneNumber, password, confirmPassword
+    } = req.body;
     if (!username || typeof username !== 'string') {
       return res.status(400).send({
         username: 'Please Enter Username'
@@ -32,26 +34,31 @@ class Validation {
         password: 'password does not match'
       });
     } next();
-  }
-  static signin(req, res, next) {
+  },
+
+  signin(req, res, next) {
     const { username, password } = req.body;
     if (!username || typeof username !== 'string') {
       res.status(400).send({
-        message: 'Please enter Your username or email or Phone Number'
+        message: 'Please enter Your username or email or Phone Number!'
       });
     } else if (!password) {
       res.status(400).send({
-        message: 'Please enter Your Password'
+        message: 'Please enter Your Password!'
       });
     } next();
-  }
-  static createEvent(req, res, next) {
+  },
+  createEvent(req, res, next) {
     const {
-      userId, centerId, eventType, eventDate, duration
+      centerId, eventType, eventDate, duration
     } = req.body;
-    if (!centerId || isNaN(centerId)) {
+    if (!centerId) {
       res.status(400).send({
-        message: 'Please include the center ID '
+        message: 'Please include the center ID!'
+      });
+    } else if (isNaN(centerId)) {
+      res.status(400).send({
+        message: 'Center ID Must Be a Number!'
       });
     } else if (!eventType || typeof eventType !== 'string') {
       res.status(400).send({
@@ -66,12 +73,12 @@ class Validation {
         message: 'Please Provide the number of days of Event'
       });
     } next();
-  }
-  static addCenter(req, res, next) {
-	  const {
-		  userId, name, address, description, location, capacity, venueType, price, phoneNumber 
-    }
-	= req.body;
+  },
+
+  addCenter(req, res, next) {
+    const {
+      userId, name, address, description, location, capacity, venueType, price, phoneNumber
+    } = req.body;
     if (!name || typeof name !== 'string') {
       res.status(400).send({
         message: 'Please Add Name Of The Center!'
@@ -110,5 +117,5 @@ class Validation {
       });
     } next();
   }
-}
+};
 export default Validation;
