@@ -23,7 +23,7 @@ app.use('/api/v1/centers', center);
 
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
-app.get('/api/v1/home', (req, res) => res.status(200).send({
+app.get('', (req, res) => res.status(200).send({
   message: 'Welcome To Muche Event manager API!!!',
 }));
 

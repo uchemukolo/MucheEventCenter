@@ -4,6 +4,7 @@ import model from '../models';
 
 
 require('dotenv').config();
+const key = process.env.SECRET_KEY;
 
 const users = model.Users;
 /**
