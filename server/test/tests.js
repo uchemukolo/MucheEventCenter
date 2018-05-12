@@ -17,7 +17,7 @@ let id;
 describe('Muche Event manager', () => {
   it('should get 200 status', (done) => {
     chai.request(app)
-      .get('/api/v1/home')
+      .get('')
       .end((err, res) => {
         res.body.should.be.a('object');
         res.should.have.status(200);

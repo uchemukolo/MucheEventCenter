@@ -4,13 +4,14 @@
   "description": "OVERVIEW What? Given you manage an events center, this app will help you accept applications to use your center / facilities, and will either decline events when the proposed day is already taken, or suggest an available day How? This project is broken down into challenges and completion of all challenges would contribute greatly to your learning towards becoming a full-stack developer. Upon completion, you would have built a world-class full-stack (front-end and back-end) JS application. Why? Andela distributes opportunities. We disseminate Learning and catalyse Technology leadership. The project is founded on the premise that aspiring Technology Leaders learn programming whilst building things that matter and that the best way to learn is by building a complete product. This project has one objective:​ create opportunities for learning where they build real products. In this way, we inspire change in the African tech landscape.",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test && nyc --reporter=html --reporter=text mocha --compilers js:babel-core/register server/test/tests.js",
-    "migrate": "sequelize db:migrate:undo:all&&sequelize db:migrate",
+    "test": "npm run undo && npm run migrate cross-env NODE_ENV=test && nyc --reporter=html --reporter=text mocha --compilers js:babel-core/register server/test/tests.js",
     "start": "nodemon --exec babel-node server/bin/www",
     "build": "babel ./server",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
-    "postinstall": "npm run build"
+    "postinstall": "npm run build",
+    "migrate": "sequelize db:migrate",
+    "undo": "sequelize db:migrate:undo:all"
   },
   "repository": {
     "type": "git",
